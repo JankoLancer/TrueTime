@@ -52,7 +52,7 @@ class TrueTime {
 
     /// Cache TrueTime initialization information in SharedPreferences
     /// This can help avoid additional TrueTime initialization on app kills
-    Future<TrueTime> withSharedPreferencesCache() async {
+    Future<TrueTime> enableSharedPreferencesCache() async {
         _DISK_CACHE_CLIENT.enableCacheInterface(await SharedPreferenceCacheImpl.getInstance());
         return _instance;
     }
@@ -110,20 +110,25 @@ class TrueTime {
         return _instance;
     }
 
-    // -----------------------------------------------------------------------------------
-
-    Future<void> initialize(String ntpHost) async {
+    Future<bool> initialize(String ntpHost) async {
         if (await isInitialized()) {
             TrueLog.i(TAG, "---- TrueTime already initialized from previous boot/init");
-            return;
+            return true;
         }
 
-        await requestTime(ntpHost);
-        saveTrueTimeInfoToDisk();
+        try {
+          await initializeNTP(ntpHost);
+          saveTrueTimeInfoToDisk();
+          return true;
+        }
+        catch(e){
+          TrueLog.e(TAG, e.toString());
+          return false;
+        }
     }
 
-    Future<List<int>> requestTime(String ntpHost) async {
-        return await _SNTP_CLIENT.requestTime(ntpHost,
+    Future<void> initializeNTP(String ntpHost) async {
+       await _SNTP_CLIENT.initialize(ntpHost,
             _rootDelayMax,
             _rootDispersionMax,
             _serverResponseDelayMax,

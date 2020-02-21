@@ -11,7 +11,7 @@ class DiskCacheClient {
       "com.instacart.library.truetime.cached_device_uptime";
   static const String KEY_CACHED_SNTP_TIME =
       "com.instacart.library.truetime.cached_sntp_time";
-  static final String TAG = "DiskCacheClient";
+  static const String TAG = "DiskCacheClient";
 
   CacheInterface _cacheInterface;
 
@@ -80,8 +80,6 @@ class DiskCacheClient {
 
     return _cacheInterface.get(KEY_CACHED_SNTP_TIME, 0);
   }
-
-  // -----------------------------------------------------------------------------------
 
   bool _cacheUnavailable() {
     if (_cacheInterface == null) {

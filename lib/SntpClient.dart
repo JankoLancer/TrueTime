@@ -5,32 +5,32 @@ import 'package:ntp/ntp.dart';
 import 'package:uptime/uptime.dart';
 
 class SntpClient {
-  static final int RESPONSE_INDEX_ORIGINATE_TIME = 0;
-  static final int RESPONSE_INDEX_RECEIVE_TIME = 1;
-  static final int RESPONSE_INDEX_TRANSMIT_TIME = 2;
-  static final int RESPONSE_INDEX_RESPONSE_TIME = 3;
-  static final int RESPONSE_INDEX_ROOT_DELAY = 4;
-  static final int RESPONSE_INDEX_DISPERSION = 5;
-  static final int RESPONSE_INDEX_STRATUM = 6;
-  static final int RESPONSE_INDEX_RESPONSE_TICKS = 7;
-  static final int RESPONSE_INDEX_SIZE = 8;
+  static const int RESPONSE_INDEX_ORIGINATE_TIME = 0;
+  static const int RESPONSE_INDEX_RECEIVE_TIME = 1;
+  static const int RESPONSE_INDEX_TRANSMIT_TIME = 2;
+  static const int RESPONSE_INDEX_RESPONSE_TIME = 3;
+  static const int RESPONSE_INDEX_ROOT_DELAY = 4;
+  static const int RESPONSE_INDEX_DISPERSION = 5;
+  static const int RESPONSE_INDEX_STRATUM = 6;
+  static const int RESPONSE_INDEX_RESPONSE_TICKS = 7;
+  static const int RESPONSE_INDEX_SIZE = 8;
 
-  static final String _TAG = "SntpClient";
+  static const String TAG = "SntpClient";
 
-  static final int _NTP_PORT = 123;
-  static final int _NTP_MODE = 3;
-  static final int _NTP_VERSION = 3;
-  static final int _NTP_PACKET_SIZE = 48;
+  static const int NTP_PORT = 123;
+  static const int NTP_MODE = 3;
+  static const int NTP_VERSION = 3;
+  static const int NTP_PACKET_SIZE = 48;
 
-  static final int _INDEX_VERSION = 0;
-  static final int _INDEX_ROOT_DELAY = 4;
-  static final int _INDEX_ROOT_DISPERSION = 8;
-  static final int _INDEX_ORIGINATE_TIME = 24;
-  static final int _INDEX_RECEIVE_TIME = 32;
-  static final int _INDEX_TRANSMIT_TIME = 40;
+  static const int INDEX_VERSION = 0;
+  static const int INDEX_ROOT_DELAY = 4;
+  static const int INDEX_ROOT_DISPERSION = 8;
+  static const int INDEX_ORIGINATE_TIME = 24;
+  static const int INDEX_RECEIVE_TIME = 32;
+  static const int INDEX_TRANSMIT_TIME = 40;
 
   // 70 years plus 17 leap days
-  static final int OFFSET_1900_TO_1970 = ((365 * 70) + 17) * 24 * 60 * 60;
+  static const int OFFSET_1900_TO_1970 = ((365 * 70) + 17) * 24 * 60 * 60;
 
   int _cachedDeviceUptime;
   int _cachedSntpTime;
@@ -57,13 +57,12 @@ class SntpClient {
 
   /// Sends an NTP request to the given host and processes the response.
   /// @param ntpHost           host name of the server.
-  Future<List> requestTime(
+  Future<void> initialize(
       String ntpHost,
       double rootDelayMax,
       double rootDispersionMax,
       int serverResponseDelayMax,
       int timeoutInMillis) async {
-    RawDatagramSocket socket;
 
     try {
       DateTime now = await NTP.now();
@@ -72,7 +71,7 @@ class SntpClient {
       cacheTrueTimeInfo(
           now.millisecondsSinceEpoch, uptime);
     } catch (e) {
-      TrueLog.d(_TAG, "---- SNTP request failed for " + ntpHost);
+      TrueLog.d(TAG, "---- SNTP request failed for " + ntpHost);
       throw e;
     }
   }

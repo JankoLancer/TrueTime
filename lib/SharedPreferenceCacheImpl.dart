@@ -2,7 +2,7 @@ import 'package:TrueTime/CacheInterface.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SharedPreferenceCacheImpl implements CacheInterface {
-  static final String KEY_CACHED_SHARED_PREFS =
+  static const String KEY_CACHED_SHARED_PREFS =
       "com.instacart.library.truetime.shared_preferences";
 
   static SharedPreferences _sharedPreferences;

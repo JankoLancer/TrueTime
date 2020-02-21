@@ -70,7 +70,8 @@ class _MyAppState extends State<MyApp> {
 
   void _updateTime() async {
     TrueTime trueTime = await TrueTime.getInstance();
-    await trueTime.withSharedPreferencesCache();
+    await trueTime.enableSharedPreferencesCache();
+    trueTime.withLoggingEnabled(true);
     await trueTime.initialize('pool.ntp.org');
 
     var _tempNtpTime = await TrueTime.now();
