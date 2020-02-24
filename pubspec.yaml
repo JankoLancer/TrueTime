@@ -13,7 +13,7 @@ dependencies:
   ntp: 1.0.5
   uptime: 
     git: https://github.com/Crimsons/uptime/
-  shared_preferences: 0.5.6+1
+  shared_preferences: 0.5.6+2
   logger: ^0.8.3
   
 dev_dependencies:
