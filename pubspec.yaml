@@ -14,7 +14,7 @@ dependencies:
   uptime: 
     git: https://github.com/JankoLancer/uptime
   shared_preferences: ^0.5.7
-  logger: ^0.8.3
+  logger: ^0.9.1
   
 dev_dependencies:
   flutter_test:
